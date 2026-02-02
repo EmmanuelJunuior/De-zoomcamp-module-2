@@ -104,3 +104,4 @@ Homework submission form:
 Data Engineer
 
 * GitHub: [github.com/EmmanuelJunuior/De-zoomcamp-module-2)
+* LinkedIn: [https://www.linkedin.com/in/emmanuel-manuel-junior-79b886184)
