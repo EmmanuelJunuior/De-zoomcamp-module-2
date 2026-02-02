@@ -1,0 +1,33 @@
+id: yellow_taxi_flow
+namespace: zoomcamp
+
+description: Ingest Yellow Taxi data from NYC TLC GitHub releases
+
+inputs:
+  - id: taxi
+    type: STRING
+    defaults: yellow
+
+  - id: year
+    type: INT
+    defaults: 2020
+
+  - id: month
+    type: STRING
+    defaults: "01"
+
+variables:
+  file: "{{ inputs.taxi }}_tripdata_{{ inputs.year }}-{{ inputs.month }}.csv"
+
+tasks:
+  - id: extract
+    type: io.kestra.plugin.core.http.Download
+    uri: https://github.com/DataTalksClub/nyc-tlc-data/releases/download/{{ inputs.taxi }}/{{ vars.file }}.gz
+
+  - id: decompress
+    type: io.kestra.plugin.compress.GzipDecompress
+    from: "{{ outputs.extract.uri }}"
+
+  - id: log
+    type: io.kestra.plugin.core.log.Log
+    message: "Processed {{ vars.file }}"
